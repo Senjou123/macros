@@ -122,7 +122,10 @@ function smite(actor, slotLevel, criticalHit) {
     targets.forEach(target => {
         let numDice = slotLevel + 1;
         let type = target.actor.data.data.details.type?.toLocaleLowerCase();
-        if (affectedCreatureTypes.includes(type)) numDice += 1;
+        for(let affected_type of affectedCreatureTypes)
+	{
+	  if(type.includes(affected_type)) { numDice++; break; }
+	}
         if (criticalHit) numDice *= 2;
         new Roll(`${numDice}d8`).roll().toMessage({ flavor: "Macro Divine Smite - Damage Roll (Radiant)", speaker })
     })
